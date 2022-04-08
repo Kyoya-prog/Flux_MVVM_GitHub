@@ -30,6 +30,10 @@ class Store{
         _ = dispatchToken
     }
     
+    deinit{
+        dispatcher.unregister(token: dispatchToken)
+    }
+    
     func onDispatch(_ action:Action){
         fatalError("must overrided")
     }

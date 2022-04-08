@@ -28,6 +28,7 @@
 		3D9D477B28000DEB00FC4CAF /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */; };
 		3D9D477F2800126900FC4CAF /* ActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477E2800126900FC4CAF /* ActionCreator.swift */; };
 		3DD28FF92800235500E71564 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FF82800235500E71564 /* Store.swift */; };
+		3DD28FFB280025CF00E71564 /* SearchRepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		3D9D477E2800126900FC4CAF /* ActionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCreator.swift; sourceTree = "<group>"; };
 		3DD28FF82800235500E71564 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 				3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */,
 				3D9D477E2800126900FC4CAF /* ActionCreator.swift */,
 				3DD28FF82800235500E71564 /* Store.swift */,
+				3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */,
 			);
 			path = Flux;
 			sourceTree = "<group>";
@@ -356,6 +359,7 @@
 				3DD28FF92800235500E71564 /* Store.swift in Sources */,
 				3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */,
 				3D9D476E28000C2800FC4CAF /* ApiClient.swift in Sources */,
+				3DD28FFB280025CF00E71564 /* SearchRepositoryStore.swift in Sources */,
 				3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */,
 				3D9D477F2800126900FC4CAF /* ActionCreator.swift in Sources */,
 				3D9D476F28000C2800FC4CAF /* SearchRepositoriesRequest.swift in Sources */,
