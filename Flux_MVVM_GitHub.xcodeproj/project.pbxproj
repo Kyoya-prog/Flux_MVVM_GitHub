@@ -24,6 +24,7 @@
 		3D9D477028000C2800FC4CAF /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476A28000C2800FC4CAF /* Request.swift */; };
 		3D9D477128000C2800FC4CAF /* GitHubApiRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476B28000C2800FC4CAF /* GitHubApiRequestable.swift */; };
 		3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477428000C6E00FC4CAF /* Repository.swift */; };
+		3D9D477728000D5200FC4CAF /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477628000D5100FC4CAF /* Action.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		3D9D476A28000C2800FC4CAF /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
 		3D9D476B28000C2800FC4CAF /* GitHubApiRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubApiRequestable.swift; sourceTree = "<group>"; };
 		3D9D477428000C6E00FC4CAF /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		3D9D477628000D5100FC4CAF /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +149,7 @@
 		3D9D476028000BED00FC4CAF /* Flux */ = {
 			isa = PBXGroup;
 			children = (
+				3D9D477628000D5100FC4CAF /* Action.swift */,
 			);
 			path = Flux;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9D472F280007CE00FC4CAF /* ViewController.swift in Sources */,
+				3D9D477728000D5200FC4CAF /* Action.swift in Sources */,
 				3D9D477028000C2800FC4CAF /* Request.swift in Sources */,
 				3D9D472B280007CE00FC4CAF /* AppDelegate.swift in Sources */,
 				3D9D476D28000C2800FC4CAF /* Pagination.swift in Sources */,
