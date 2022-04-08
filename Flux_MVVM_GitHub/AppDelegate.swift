@@ -9,12 +9,18 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
+    let dispatcher = Dispatcher.shared
+    
+    lazy var searchStore = SearchRepositoryStore.shared
+    
+    let actionCreator = ActionCreator()
 
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = ViewController()
+        window?.rootViewController = RepositorySearchViewController(searchStore: searchStore, actionCreator: actionCreator)
         window?.makeKeyAndVisible()
         return true
     }

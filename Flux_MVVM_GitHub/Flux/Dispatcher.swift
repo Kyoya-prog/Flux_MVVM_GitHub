@@ -15,9 +15,12 @@ final class Dispatcher {
     let lock: NSLocking
     private var callbacks: [DispatchToken: (Action) -> ()]
     
-    init(){
+    private init(){
         self.lock = NSRecursiveLock()
         self.callbacks = [:]
+    }
+    deinit{
+        print("deinit")
     }
     
     func register(callback: @escaping (Action)->())->DispatchToken{
