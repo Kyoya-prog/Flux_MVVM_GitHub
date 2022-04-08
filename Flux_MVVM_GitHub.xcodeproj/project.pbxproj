@@ -17,6 +17,13 @@
 		3D9D474E280007D000FC4CAF /* Flux_MVVM_GitHubUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D474D280007D000FC4CAF /* Flux_MVVM_GitHubUITestsLaunchTests.swift */; };
 		3D9D475C2800089700FC4CAF /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 3D9D475B2800089700FC4CAF /* RxCocoa */; };
 		3D9D475E2800089700FC4CAF /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 3D9D475D2800089700FC4CAF /* RxSwift */; };
+		3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476528000C2800FC4CAF /* ItemResponse.swift */; };
+		3D9D476D28000C2800FC4CAF /* Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476628000C2800FC4CAF /* Pagination.swift */; };
+		3D9D476E28000C2800FC4CAF /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476728000C2800FC4CAF /* ApiClient.swift */; };
+		3D9D476F28000C2800FC4CAF /* SearchRepositoriesRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476928000C2800FC4CAF /* SearchRepositoriesRequest.swift */; };
+		3D9D477028000C2800FC4CAF /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476A28000C2800FC4CAF /* Request.swift */; };
+		3D9D477128000C2800FC4CAF /* GitHubApiRequestable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D476B28000C2800FC4CAF /* GitHubApiRequestable.swift */; };
+		3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477428000C6E00FC4CAF /* Repository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +56,13 @@
 		3D9D4747280007D000FC4CAF /* Flux_MVVM_GitHubUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Flux_MVVM_GitHubUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D9D474B280007D000FC4CAF /* Flux_MVVM_GitHubUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flux_MVVM_GitHubUITests.swift; sourceTree = "<group>"; };
 		3D9D474D280007D000FC4CAF /* Flux_MVVM_GitHubUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Flux_MVVM_GitHubUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		3D9D476528000C2800FC4CAF /* ItemResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemResponse.swift; sourceTree = "<group>"; };
+		3D9D476628000C2800FC4CAF /* Pagination.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pagination.swift; sourceTree = "<group>"; };
+		3D9D476728000C2800FC4CAF /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiClient.swift; sourceTree = "<group>"; };
+		3D9D476928000C2800FC4CAF /* SearchRepositoriesRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchRepositoriesRequest.swift; sourceTree = "<group>"; };
+		3D9D476A28000C2800FC4CAF /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		3D9D476B28000C2800FC4CAF /* GitHubApiRequestable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GitHubApiRequestable.swift; sourceTree = "<group>"; };
+		3D9D477428000C6E00FC4CAF /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +115,8 @@
 		3D9D4729280007CE00FC4CAF /* Flux_MVVM_GitHub */ = {
 			isa = PBXGroup;
 			children = (
+				3D9D476328000C2800FC4CAF /* API */,
+				3D9D476028000BED00FC4CAF /* Flux */,
 				3D9D472A280007CE00FC4CAF /* AppDelegate.swift */,
 				3D9D472C280007CE00FC4CAF /* SceneDelegate.swift */,
 				3D9D472E280007CE00FC4CAF /* ViewController.swift */,
@@ -126,6 +142,59 @@
 				3D9D474D280007D000FC4CAF /* Flux_MVVM_GitHubUITestsLaunchTests.swift */,
 			);
 			path = Flux_MVVM_GitHubUITests;
+			sourceTree = "<group>";
+		};
+		3D9D476028000BED00FC4CAF /* Flux */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Flux;
+			sourceTree = "<group>";
+		};
+		3D9D476328000C2800FC4CAF /* API */ = {
+			isa = PBXGroup;
+			children = (
+				3D9D476728000C2800FC4CAF /* ApiClient.swift */,
+				3D9D477228000C3800FC4CAF /* Request */,
+				3D9D476428000C2800FC4CAF /* Response */,
+				3D9D477328000C6200FC4CAF /* Data */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		3D9D476428000C2800FC4CAF /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				3D9D476528000C2800FC4CAF /* ItemResponse.swift */,
+				3D9D476628000C2800FC4CAF /* Pagination.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
+		3D9D476828000C2800FC4CAF /* GitHub */ = {
+			isa = PBXGroup;
+			children = (
+				3D9D476928000C2800FC4CAF /* SearchRepositoriesRequest.swift */,
+			);
+			path = GitHub;
+			sourceTree = "<group>";
+		};
+		3D9D477228000C3800FC4CAF /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				3D9D476828000C2800FC4CAF /* GitHub */,
+				3D9D476B28000C2800FC4CAF /* GitHubApiRequestable.swift */,
+				3D9D476A28000C2800FC4CAF /* Request.swift */,
+			);
+			path = Request;
+			sourceTree = "<group>";
+		};
+		3D9D477328000C6200FC4CAF /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				3D9D477428000C6E00FC4CAF /* Repository.swift */,
+			);
+			path = Data;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,8 +335,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				3D9D472F280007CE00FC4CAF /* ViewController.swift in Sources */,
+				3D9D477028000C2800FC4CAF /* Request.swift in Sources */,
 				3D9D472B280007CE00FC4CAF /* AppDelegate.swift in Sources */,
+				3D9D476D28000C2800FC4CAF /* Pagination.swift in Sources */,
 				3D9D472D280007CE00FC4CAF /* SceneDelegate.swift in Sources */,
+				3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */,
+				3D9D476E28000C2800FC4CAF /* ApiClient.swift in Sources */,
+				3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */,
+				3D9D476F28000C2800FC4CAF /* SearchRepositoriesRequest.swift in Sources */,
+				3D9D477128000C2800FC4CAF /* GitHubApiRequestable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
