@@ -27,6 +27,7 @@
 		3D9D477728000D5200FC4CAF /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477628000D5100FC4CAF /* Action.swift */; };
 		3D9D477B28000DEB00FC4CAF /* Dispatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */; };
 		3D9D477F2800126900FC4CAF /* ActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477E2800126900FC4CAF /* ActionCreator.swift */; };
+		3DD28FF92800235500E71564 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FF82800235500E71564 /* Store.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -69,6 +70,7 @@
 		3D9D477628000D5100FC4CAF /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dispatcher.swift; sourceTree = "<group>"; };
 		3D9D477E2800126900FC4CAF /* ActionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCreator.swift; sourceTree = "<group>"; };
+		3DD28FF82800235500E71564 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 				3D9D477628000D5100FC4CAF /* Action.swift */,
 				3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */,
 				3D9D477E2800126900FC4CAF /* ActionCreator.swift */,
+				3DD28FF82800235500E71564 /* Store.swift */,
 			);
 			path = Flux;
 			sourceTree = "<group>";
@@ -350,6 +353,7 @@
 				3D9D472B280007CE00FC4CAF /* AppDelegate.swift in Sources */,
 				3D9D476D28000C2800FC4CAF /* Pagination.swift in Sources */,
 				3D9D472D280007CE00FC4CAF /* SceneDelegate.swift in Sources */,
+				3DD28FF92800235500E71564 /* Store.swift in Sources */,
 				3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */,
 				3D9D476E28000C2800FC4CAF /* ApiClient.swift in Sources */,
 				3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */,
