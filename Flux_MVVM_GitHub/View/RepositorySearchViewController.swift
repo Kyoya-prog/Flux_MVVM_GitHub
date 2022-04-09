@@ -23,9 +23,10 @@ class RepositorySearchViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Search Repositories"
         searchBar.delegate = self
         _ = reloadSubscription
-        super.viewDidLoad()
         construct()
     }
     

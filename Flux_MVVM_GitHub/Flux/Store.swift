@@ -38,8 +38,9 @@ class Store{
         fatalError("must overrided")
     }
     
-    final func emitChange(){
-        notificationCenter.post(name: NotificationName.storeChanged, object: nil)
+    final func emitChange(pre:String){
+        print(pre)
+        notificationCenter.post(name: NotificationName.storeChanged, object: pre,userInfo: ["someKey": pre])
     }
     
     final func addListener(callback: @escaping ()->()) -> Subscription{

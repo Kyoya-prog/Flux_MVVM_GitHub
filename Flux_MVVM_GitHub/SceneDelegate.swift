@@ -8,22 +8,42 @@
 import UIKit
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-    
+
     var window: UIWindow?
 
-    let dispatcher = Dispatcher.shared
+    private let actionCreator = ActionCreator()
+    private let searchStore = SearchRepositoryStore.shared
+    private let selectedStore = SelectedRepositoryStore.shared
     
-    lazy var searchStore = SearchRepositoryStore.shared
-    
-    let actionCreator = ActionCreator()
+    private lazy var showRepositoryDetailSubscription: Subscription = {
+        return selectedStore.addListener { [weak self] in
+            DispatchQueue.main.async {
+                guard
+                    let me = self,
+                    me.selectedStore.repository != nil,
+                    let tabBarController = me.window?.rootViewController as? UITabBarController,
+                    let navigationController = tabBarController.selectedViewController as? UINavigationController
+                else {
+                    return
+                }
+                let vc = RepositoryDetailViewController()
+                navigationController.pushViewController(vc, animated: true)
+            }
+        }
+    }()
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = RepositorySearchViewController(searchStore: searchStore, actionCreator: actionCreator)
+            let tabBarController = UITabBarController()
+            let repositorySearchViewController = UINavigationController(rootViewController: RepositorySearchViewController())
+            tabBarController.addChild(repositorySearchViewController)
+            window.rootViewController = tabBarController
             self.window = window
             window.makeKeyAndVisible()
+            
+            _ = showRepositoryDetailSubscription
         }
     }
 

@@ -30,4 +30,8 @@ final class ActionCreator{
     func clearRepositories(){
         dispatcher.dispatch(.clearRepositories)
     }
+    
+    func setSelectedRepository(repository:Repository){
+        dispatcher.dispatch(.selectedRepository(repository))
+    }
 }

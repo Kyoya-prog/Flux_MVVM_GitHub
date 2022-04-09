@@ -16,8 +16,9 @@ class SearchRepositoryStore: Store{
             self.repositories = self.repositories + repositories
         case .clearRepositories:
             self.repositories.removeAll()
+        default:
+            return
         }
-        
-        emitChange()
+        emitChange(pre: "searchRepository")
     }
 }

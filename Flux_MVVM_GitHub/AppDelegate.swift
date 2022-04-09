@@ -10,18 +10,38 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-    let dispatcher = Dispatcher.shared
-    
-    lazy var searchStore = SearchRepositoryStore.shared
-    
-    let actionCreator = ActionCreator()
-
     var window: UIWindow?
+    
+    private let actionCreator = ActionCreator()
+    private let searchStore = SearchRepositoryStore.shared
+    private let selectedStore = SelectedRepositoryStore.shared
+    
+    private lazy var showRepositoryDetailSubscription: Subscription = {
+        return selectedStore.addListener { [weak self] in
+            DispatchQueue.main.async {
+                guard
+                    let me = self,
+                    me.selectedStore.repository != nil,
+                    let tabBarController = me.window?.rootViewController as? UITabBarController,
+                    let navigationController = tabBarController.selectedViewController as? UINavigationController
+                else {
+                    return
+                }
+                let vc = RepositoryDetailViewController()
+                navigationController.pushViewController(vc, animated: true)
+            }
+        }
+    }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = RepositorySearchViewController(searchStore: searchStore, actionCreator: actionCreator)
+        let tabBarController = UITabBarController()
+        let repositorySearchViewController = UINavigationController(rootViewController: RepositorySearchViewController())
+        tabBarController.addChild(repositorySearchViewController)
+        window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
+        _ = showRepositoryDetailSubscription
+
         return true
     }
 
@@ -38,7 +58,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
-
-
 }
 
