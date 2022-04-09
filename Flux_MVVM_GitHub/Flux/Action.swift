@@ -9,4 +9,5 @@ enum Action{
     case addRepositories([Repository])
     case clearRepositories
     case selectedRepository(Repository)
+    case setFavoriteRepositories([Repository])
 }

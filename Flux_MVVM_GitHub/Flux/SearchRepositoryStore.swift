@@ -19,6 +19,6 @@ class SearchRepositoryStore: Store{
         default:
             return
         }
-        emitChange(pre: "searchRepository")
+        emitChange()
     }
 }

@@ -18,6 +18,6 @@ final class SelectedRepositoryStore:Store{
         default:
             return
         }
-        emitChange(pre:"selected")
+        emitChange()
     }
 }

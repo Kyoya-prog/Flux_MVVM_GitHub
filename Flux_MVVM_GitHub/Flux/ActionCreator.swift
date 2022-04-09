@@ -10,10 +10,14 @@ import Dispatch
 final class ActionCreator{
     private let dispatcher:Dispatcher
     private let apiSession:GitHubApiRequestable
+    private let localCache: LocalCacheable
     
-    init(dispatcher: Dispatcher = .shared, apiSession:GitHubApiSession = GitHubApiSession.shared){
+    init(dispatcher: Dispatcher = .shared,
+         apiSession:GitHubApiSession = GitHubApiSession.shared,
+         localCache: LocalCacheable = LocalCache.shared){
         self.dispatcher = dispatcher
         self.apiSession = apiSession
+        self.localCache = localCache
     }
     
     func searchRepositories(query:String,page:Int = 1){
@@ -33,5 +37,17 @@ final class ActionCreator{
     
     func setSelectedRepository(repository:Repository){
         dispatcher.dispatch(.selectedRepository(repository))
+    }
+    
+    func addFavoriteRepository(_ repository: Repository){
+        let repositories = localCache[.favorites] + [repository]
+        localCache[.favorites] = repositories
+        dispatcher.dispatch(.setFavoriteRepositories(repositories))
+    }
+    
+    func removeFavoriteRepository(_ repository: Repository){
+        let repositories = localCache[.favorites].filter{ $0.id != repository.id }
+        localCache[.favorites] = repositories
+        dispatcher.dispatch(.setFavoriteRepositories(repositories))
     }
 }
