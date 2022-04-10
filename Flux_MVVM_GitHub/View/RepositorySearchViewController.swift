@@ -25,7 +25,7 @@ class RepositorySearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchStore.repositoryObservable.map{_ in}
+        searchStore.repositories.asObservable().map{_ in}
             .bind(to: Binder(tableView){ tableview, _ in
                 tableview.reloadData()
             }).disposed(by: disposeBag)

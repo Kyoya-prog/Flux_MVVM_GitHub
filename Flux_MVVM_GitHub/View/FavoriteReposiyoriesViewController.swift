@@ -18,7 +18,7 @@ class FavoriteRepositoriesViewController: UIViewController {
         dataSource = FavoriteRepositoriesDataSource()
         dataSource.configure(tableView)
         
-        favoriteRepositoryStore.repositoriesObservable.bind(to: Binder(tableView){ tableView,_ in
+        favoriteRepositoryStore.repositories.asObservable().bind(to: Binder(tableView){ tableView,_ in
             tableView.reloadData()
         }).disposed(by: disposeBag)
 
@@ -43,7 +43,7 @@ class FavoriteRepositoriesViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private var repositories: [Repository] {
-        return favoriteRepositoryStore.repositories
+        return favoriteRepositoryStore.repositories.value
     }
     
     private let tableView = UITableView()

@@ -8,34 +8,24 @@ import RxRelay
 import RxSwift
 import Foundation
 
-class SearchRepositoryStore {
+final class SearchRepositoryStore {
     static let shared = SearchRepositoryStore()
-    
-    var repositories: [Repository]{
-        _repositories.value
-    }
-    
-    var repositoryObservable:Observable<[Repository]>{
-        return _repositories.asObservable()
-    }
-    
+    let repositories: Property<[Repository]>
     private let _repositories = BehaviorRelay<[Repository]>(value: [])
-    
-    var errorObservable: Observable<Error> {
-        return _error.asObservable()
-    }
-    private let _error = PublishRelay<Error>()
+    let error: Observable<Error>
     private let disposeBag = DisposeBag()
-    
     init(dispatcher: SearchRepositoryDispatcher = .shared) {
-        dispatcher.searchRepositories.subscribe(onNext: {[weak self] repositories in
-            self?._repositories.accept(repositories)
-        }, onError: {[weak self] error in
-            self?._error.accept(error)
-        }).disposed(by: disposeBag)
-        dispatcher.clearRepositories.subscribe { [weak self] _ in
-            self?._repositories.accept([])
-        }.disposed(by: disposeBag)
-
+        
+        self.repositories = Property(_repositories)
+        self.error = dispatcher.error.asObservable()
+        
+        dispatcher.searchRepositories
+            .withLatestFrom(_repositories) { $1 + $0 }
+            .bind(to: _repositories)
+            .disposed(by: disposeBag)
+        dispatcher.clearRepositories
+            .map { [] }
+            .bind(to: _repositories)
+            .disposed(by: disposeBag)
     }
 }

@@ -12,14 +12,7 @@ import RxSwift
 final class FavoriteRepositoryStore{
     static let shared = FavoriteRepositoryStore()
     
-    var repositories:[Repository]{
-        _favoriteRepositories.value
-    }
-    
-    var repositoriesObservable:Observable<[Repository]>{
-        _favoriteRepositories.asObservable()
-    }
-    
+    var repositories:Property<[Repository]>
     private let _favoriteRepositories = BehaviorRelay<[Repository]>(value:[])
     
     var errorObservable: Observable<Error> {
@@ -29,6 +22,7 @@ final class FavoriteRepositoryStore{
     private let disposeBag = DisposeBag()
     
     init(dispatcher: FavoriteRepositoryDispatcher = .shared){
+        self.repositories = Property(_favoriteRepositories)
         dispatcher.repositories
             .subscribe {[weak self] repositories in
                 self?._favoriteRepositories.accept(repositories)

@@ -12,14 +12,14 @@ final class SelectedRepositoryStore{
     
     static let shared = SelectedRepositoryStore()
     
-    var repositoryObservable:Observable<Repository?>{
-        _repository.asObservable()
-    }
+    var repository:Property<Repository?>
+    
     
     private let _repository = BehaviorRelay<Repository?>(value: nil)
     private let disposeBag = DisposeBag()
     
     init(dispatcher:SelectRepositoryDispatcher = .shared){
+        self.repository = Property(_repository)
         dispatcher.repository
             .bind(to: _repository)
             .disposed(by: disposeBag)

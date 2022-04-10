@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private let favoriteRepositoryActionCreator = FavoriteRepositoryActionCreator.shared
     
     private lazy var showRepositoryDetailDisposable: Disposable = {
-        return selectRepositoryStore.repositoryObservable
+        return selectRepositoryStore.repository.asObservable()
             .flatMap { $0 == nil ? .empty() : Observable.just(()) }
             .bind(to: Binder(self) { me, _ in
                 guard

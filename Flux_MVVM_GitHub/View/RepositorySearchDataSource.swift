@@ -31,14 +31,14 @@ final class RepositorySearchDataSource: NSObject {
 
 extension RepositorySearchDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchStore.repositories.count
+        return searchStore.repositories.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RepositoryCell.reuseIdentifier, for: indexPath)
 
         if let repositoryCell = cell as? RepositoryCell {
-            let repository = searchStore.repositories[indexPath.row]
+            let repository = searchStore.repositories.value[indexPath.row]
             repositoryCell.configure(title: repository.fullName, description: repository.description ?? "", language: repository.language ?? "", starCount: repository.stargazersCount)
         }
 
@@ -49,7 +49,7 @@ extension RepositorySearchDataSource: UITableViewDataSource {
 extension RepositorySearchDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let repository = searchStore.repositories[indexPath.row]
+        let repository = searchStore.repositories.value[indexPath.row]
         selectRepositoryActionCreator.setSelectedRepository(repository)
     }
 }

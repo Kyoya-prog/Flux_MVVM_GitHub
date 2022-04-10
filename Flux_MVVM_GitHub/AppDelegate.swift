@@ -24,7 +24,7 @@ final class _AppDelegate {
     private let flux: Flux
 
     private lazy var showRepositoryDetailDisposable: Disposable = {
-        return flux.selectedRepositoryStore.repositoryObservable
+        return flux.selectedRepositoryStore.repository.asObservable()
             .flatMap { $0 == nil ? .empty() : Observable.just(()) }
             .bind(to: Binder(self) { me, _ in
                 guard

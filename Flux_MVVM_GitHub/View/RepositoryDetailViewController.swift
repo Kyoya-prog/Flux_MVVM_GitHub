@@ -32,13 +32,13 @@ final class RepositoryDetailViewController:UIViewController{
     }
     
     private func setUpObservableSubscription(){
-        let repository = selectedRepositoryStore.repositoryObservable
+        let repository = selectedRepositoryStore.repository.asObservable()
             .flatMap { repository -> Observable<Repository> in
                 repository.map(Observable.just) ?? .empty()
             }
             .share(replay: 1, scope: .whileConnected)
 
-        let isFavorite = favoriteRepositoryStore.repositoriesObservable
+        let isFavorite = favoriteRepositoryStore.repositories.asObservable()
             .withLatestFrom(repository) { ($0, $1) }
             .map { repositories, repository -> Bool in
                 repositories.contains { $0.id == repository.id }
