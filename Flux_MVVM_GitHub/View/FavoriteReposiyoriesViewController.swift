@@ -12,10 +12,12 @@ import RxSwift
 class FavoriteRepositoriesViewController: UIViewController {
     
     init(favoriteRepositoryStore: FavoriteRepositoryStore = .shared,
-         actionCreator: ActionCreator = .init()) {
+         favoriteRepositoryActionCreator: FavoriteRepositoryActionCreator = .shared,
+         selectedRepositoryActionCreator: SelectRepositoryActionCreator = .shared) {
         self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.actionCreator = actionCreator
-        dataSource = FavoriteRepositoriesDataSource(favoriteRepositoryStore: favoriteRepositoryStore, actionCreator: actionCreator)
+        self.favoriteRepositoryActionCreator = favoriteRepositoryActionCreator
+        self.selectedRepositoryActionCreator = selectedRepositoryActionCreator
+        dataSource = FavoriteRepositoriesDataSource()
         dataSource.configure(tableView)
         
         favoriteRepositoryStore.repositoriesObservable.bind(to: Binder(tableView){ tableView,_ in
@@ -37,7 +39,8 @@ class FavoriteRepositoriesViewController: UIViewController {
     }
     
     private let favoriteRepositoryStore: FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let favoriteRepositoryActionCreator: FavoriteRepositoryActionCreator
+    private let selectedRepositoryActionCreator: SelectRepositoryActionCreator
     private let dataSource: FavoriteRepositoriesDataSource
     private let disposeBag = DisposeBag()
     

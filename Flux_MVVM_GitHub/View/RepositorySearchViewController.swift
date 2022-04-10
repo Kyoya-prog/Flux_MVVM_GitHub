@@ -12,10 +12,11 @@ import UIKit
 class RepositorySearchViewController: UIViewController {
     
     init(searchStore: SearchRepositoryStore = .shared,
-         actionCreator: ActionCreator = .init()) {
+         actionCreator:
+         SearchRepositoryActionCreator = .shared) {
         self.searchStore = searchStore
         self.actionCreator = actionCreator
-        dataSource = RepositorySearchDataSource(searchStore: searchStore, actionCreator: actionCreator)
+        dataSource = RepositorySearchDataSource()
         dataSource.configure(tableView)
         super.init(nibName: nil, bundle: nil)
     }
@@ -44,7 +45,7 @@ class RepositorySearchViewController: UIViewController {
     }
     
     private let searchStore: SearchRepositoryStore
-    private let actionCreator: ActionCreator
+    private let actionCreator: SearchRepositoryActionCreator
     private let dataSource: RepositorySearchDataSource
     private let disposeBag = DisposeBag()
     

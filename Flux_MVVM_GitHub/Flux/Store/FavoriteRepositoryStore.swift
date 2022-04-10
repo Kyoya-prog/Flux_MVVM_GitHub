@@ -28,10 +28,11 @@ final class FavoriteRepositoryStore{
     private let _error = PublishRelay<Error>()
     private let disposeBag = DisposeBag()
     
-    init(dispatcher: Dispatcher = .shared){
-        dispatcher.searchRepositories
-            .withLatestFrom(_favoriteRepositories)
-            .bind(to: _favoriteRepositories)
-            .disposed(by: disposeBag)
+    init(dispatcher: FavoriteRepositoryDispatcher = .shared){
+        dispatcher.repositories
+            .subscribe {[weak self] repositories in
+                self?._favoriteRepositories.accept(repositories)
+            }
+
     }
 }

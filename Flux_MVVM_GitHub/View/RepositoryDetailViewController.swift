@@ -15,12 +15,12 @@ final class RepositoryDetailViewController:UIViewController{
     private lazy var webView = WKWebView(frame: .zero, configuration: configuration)
     private let selectedRepositoryStore:SelectedRepositoryStore
     private let favoriteRepositoryStore:FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let actionCreator: FavoriteRepositoryActionCreator
     private let disposeBag = DisposeBag()
     
     init(selectedStore:SelectedRepositoryStore = .shared,
          favoriteStore:FavoriteRepositoryStore = .shared,
-         actionCreator:ActionCreator = .init()){
+         actionCreator:FavoriteRepositoryActionCreator = .shared){
         self.selectedRepositoryStore = selectedStore
         self.favoriteRepositoryStore = favoriteStore
         self.actionCreator = actionCreator

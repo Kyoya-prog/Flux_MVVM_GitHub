@@ -10,12 +10,12 @@ import UIKit
 final class FavoriteRepositoriesDataSource: NSObject {
 
     private let favoriteRepositoryStore: FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(favoriteRepositoryStore: FavoriteRepositoryStore,
-         actionCreator: ActionCreator) {
+    init(favoriteRepositoryStore: FavoriteRepositoryStore = .shared,
+         actionCreator: SelectRepositoryActionCreator = .shared) {
         self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.actionCreator = actionCreator
+        self.selectRepositoryActionCreator = actionCreator
 
         super.init()
     }
@@ -48,6 +48,6 @@ extension FavoriteRepositoriesDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let repository = favoriteRepositoryStore.repositories[indexPath.row]
-        actionCreator.setSelectedRepository(repository: repository)
+        selectRepositoryActionCreator.setSelectedRepository(repository)
     }
 }

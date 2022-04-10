@@ -11,12 +11,15 @@ import UIKit
 final class RepositorySearchDataSource: NSObject {
 
     private let searchStore: SearchRepositoryStore
-    private let actionCreator: ActionCreator
+    private let searchRepositoryActionCreator: SearchRepositoryActionCreator
+    private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(searchStore: SearchRepositoryStore,
-         actionCreator: ActionCreator) {
+    init(searchStore: SearchRepositoryStore = .shared,
+         searchRepositoryActionCreator: SearchRepositoryActionCreator = .shared,
+         selectRepositoryACtionCreator: SelectRepositoryActionCreator = .shared) {
         self.searchStore = searchStore
-        self.actionCreator = actionCreator
+        self.searchRepositoryActionCreator = searchRepositoryActionCreator
+        self.selectRepositoryActionCreator = selectRepositoryACtionCreator
 
         super.init()
     }
@@ -49,6 +52,6 @@ extension RepositorySearchDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         let repository = searchStore.repositories[indexPath.row]
-        actionCreator.setSelectedRepository(repository: repository)
+        selectRepositoryActionCreator.setSelectedRepository(repository)
     }
 }

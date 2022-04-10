@@ -19,16 +19,10 @@ final class SelectedRepositoryStore{
     private let _repository = BehaviorRelay<Repository?>(value: nil)
     private let disposeBag = DisposeBag()
     
-    init(dispatcher:Dispatcher = .shared){
-        dispatcher.register {[weak self] action in
-            guard let self = self else { return }
-            switch action{
-            case let .selectedRepository(repository):
-                self._repository.accept(repository)
-            default:
-                break
-            }
-        }.disposed(by: disposeBag)
+    init(dispatcher:SelectedRepositoryDispatcher = .shared){
+        dispatcher.repository
+            .bind(to: _repository)
+            .disposed(by: disposeBag)
     }
     
 

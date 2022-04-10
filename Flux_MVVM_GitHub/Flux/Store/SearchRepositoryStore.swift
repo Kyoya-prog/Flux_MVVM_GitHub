@@ -27,13 +27,15 @@ class SearchRepositoryStore {
     private let _error = PublishRelay<Error>()
     private let disposeBag = DisposeBag()
     
-    init(dispatcher: Dispatcher = .shared) {
-        dispatcher.searchRepositories
-            .bind(to: _repositories)
-            .disposed(by: disposeBag)
-        dispatcher.clearRepositories
-            .map { [] }
-            .bind(to: _repositories)
-            .disposed(by: disposeBag)
+    init(dispatcher: SearchRepositoryDispatcher = .shared) {
+        dispatcher.searchRepositories.subscribe(onNext: {[weak self] repositories in
+            self?._repositories.accept(repositories)
+        }, onError: {[weak self] error in
+            self?._error.accept(error)
+        }).disposed(by: disposeBag)
+        dispatcher.clearRepositories.subscribe { [weak self] _ in
+            self?._repositories.accept([])
+        }.disposed(by: disposeBag)
+
     }
 }

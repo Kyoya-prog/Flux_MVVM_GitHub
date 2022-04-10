@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    private let actionCreator = ActionCreator()
+    private let actionCreator = FavoriteRepositoryActionCreator.shared
     private let searchStore = SearchRepositoryStore.shared
     private let selectedRepositoryStore = SelectedRepositoryStore.shared
     
