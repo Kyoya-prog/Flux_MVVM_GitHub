@@ -36,8 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let tabBarController = UITabBarController()
-        let repositorySearchViewController = UINavigationController(rootViewController: RepositorySearchViewController())
-        tabBarController.addChild(repositorySearchViewController)
+        let values: [(UINavigationController, UITabBarItem.SystemItem)] = [
+            (UINavigationController(rootViewController: RepositorySearchViewController()), .search),
+            (UINavigationController(rootViewController: FavoriteRepositoriesViewController()), .favorites)
+        ]
+        values.enumerated().forEach {
+            $0.element.0.tabBarItem = UITabBarItem(tabBarSystemItem: $0.element.1, tag: $0.offset)
+        }
+        tabBarController.setViewControllers(values.map { $0.0 }, animated: false)
+        actionCreator.loadFavoriteRepositories()
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
         _ = showRepositoryDetailSubscription

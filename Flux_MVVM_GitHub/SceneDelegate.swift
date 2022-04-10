@@ -37,8 +37,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             let tabBarController = UITabBarController()
-            let repositorySearchViewController = UINavigationController(rootViewController: RepositorySearchViewController())
-            tabBarController.addChild(repositorySearchViewController)
+            let values: [(UINavigationController, UITabBarItem.SystemItem)] = [
+                (UINavigationController(rootViewController: RepositorySearchViewController()), .search),
+                (UINavigationController(rootViewController: FavoriteRepositoriesViewController()), .favorites)
+            ]
+            values.enumerated().forEach {
+                $0.element.0.tabBarItem = UITabBarItem(tabBarSystemItem: $0.element.1, tag: $0.offset)
+            }
+            tabBarController.setViewControllers(values.map { $0.0 }, animated: false)
+            actionCreator.loadFavoriteRepositories()
             window.rootViewController = tabBarController
             self.window = window
             window.makeKeyAndVisible()

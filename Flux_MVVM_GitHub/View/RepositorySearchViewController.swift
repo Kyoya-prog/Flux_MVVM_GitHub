@@ -24,6 +24,7 @@ class RepositorySearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         title = "Search Repositories"
         searchBar.delegate = self
         _ = reloadSubscription
@@ -51,6 +52,8 @@ class RepositorySearchViewController: UIViewController {
     private let searchBar = UISearchBar()
     
     private func construct(){
+        view.backgroundColor = .white
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
         

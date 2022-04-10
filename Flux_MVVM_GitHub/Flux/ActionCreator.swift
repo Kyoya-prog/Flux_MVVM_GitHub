@@ -50,4 +50,9 @@ final class ActionCreator{
         localCache[.favorites] = repositories
         dispatcher.dispatch(.setFavoriteRepositories(repositories))
     }
+    
+    func loadFavoriteRepositories(){
+        let repositories = localCache[.favorites]
+        dispatcher.dispatch(.setFavoriteRepositories(repositories))
+    }
 }

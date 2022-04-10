@@ -29,6 +29,9 @@
 		3D9D477F2800126900FC4CAF /* ActionCreator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D9D477E2800126900FC4CAF /* ActionCreator.swift */; };
 		3DAC0D9F2801C50B00CFDF32 /* FavoriteRepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0D9E2801C50B00CFDF32 /* FavoriteRepositoryStore.swift */; };
 		3DAC0DA22801C5EE00CFDF32 /* LocaleCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA12801C5EE00CFDF32 /* LocaleCache.swift */; };
+		3DAC0DA4280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA3280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift */; };
+		3DAC0DA62802834200CFDF32 /* FavoriteRepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA52802834200CFDF32 /* FavoriteRepositoryCell.swift */; };
+		3DAC0DA82802843900CFDF32 /* FavorireRepositoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA72802843900CFDF32 /* FavorireRepositoriesDataSource.swift */; };
 		3DD28FF92800235500E71564 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FF82800235500E71564 /* Store.swift */; };
 		3DD28FFB280025CF00E71564 /* SearchRepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */; };
 		3DD28FFE28006F6700E71564 /* RepositorySearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFD28006F6700E71564 /* RepositorySearchDataSource.swift */; };
@@ -79,6 +82,9 @@
 		3D9D477E2800126900FC4CAF /* ActionCreator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionCreator.swift; sourceTree = "<group>"; };
 		3DAC0D9E2801C50B00CFDF32 /* FavoriteRepositoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoryStore.swift; sourceTree = "<group>"; };
 		3DAC0DA12801C5EE00CFDF32 /* LocaleCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocaleCache.swift; sourceTree = "<group>"; };
+		3DAC0DA3280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteReposiyoriesViewController.swift; sourceTree = "<group>"; };
+		3DAC0DA52802834200CFDF32 /* FavoriteRepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoryCell.swift; sourceTree = "<group>"; };
+		3DAC0DA72802843900CFDF32 /* FavorireRepositoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavorireRepositoriesDataSource.swift; sourceTree = "<group>"; };
 		3DD28FF82800235500E71564 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryStore.swift; sourceTree = "<group>"; };
 		3DD28FFD28006F6700E71564 /* RepositorySearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchDataSource.swift; sourceTree = "<group>"; };
@@ -242,6 +248,9 @@
 				3DD28FFD28006F6700E71564 /* RepositorySearchDataSource.swift */,
 				3DD28FFF28006F8700E71564 /* RrpoeitoryCell.swift */,
 				3DD2900328007FBE00E71564 /* RepositoryDetailViewController.swift */,
+				3DAC0DA3280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift */,
+				3DAC0DA52802834200CFDF32 /* FavoriteRepositoryCell.swift */,
+				3DAC0DA72802843900CFDF32 /* FavorireRepositoriesDataSource.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -383,12 +392,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DAC0DA82802843900CFDF32 /* FavorireRepositoriesDataSource.swift in Sources */,
 				3D9D477B28000DEB00FC4CAF /* Dispatcher.swift in Sources */,
 				3D9D472F280007CE00FC4CAF /* RepositorySearchViewController.swift in Sources */,
 				3D9D477728000D5200FC4CAF /* Action.swift in Sources */,
 				3D9D477028000C2800FC4CAF /* Request.swift in Sources */,
 				3D9D472B280007CE00FC4CAF /* AppDelegate.swift in Sources */,
 				3D9D476D28000C2800FC4CAF /* Pagination.swift in Sources */,
+				3DAC0DA4280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift in Sources */,
 				3DD2900028006F8700E71564 /* RrpoeitoryCell.swift in Sources */,
 				3D9D472D280007CE00FC4CAF /* SceneDelegate.swift in Sources */,
 				3DD28FF92800235500E71564 /* Store.swift in Sources */,
@@ -397,6 +408,7 @@
 				3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */,
 				3D9D476E28000C2800FC4CAF /* ApiClient.swift in Sources */,
 				3DAC0D9F2801C50B00CFDF32 /* FavoriteRepositoryStore.swift in Sources */,
+				3DAC0DA62802834200CFDF32 /* FavoriteRepositoryCell.swift in Sources */,
 				3DD2900428007FBE00E71564 /* RepositoryDetailViewController.swift in Sources */,
 				3DD28FFB280025CF00E71564 /* SearchRepositoryStore.swift in Sources */,
 				3D9D477528000C6E00FC4CAF /* Repository.swift in Sources */,
