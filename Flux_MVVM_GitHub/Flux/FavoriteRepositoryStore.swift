@@ -29,16 +29,9 @@ final class FavoriteRepositoryStore{
     private let disposeBag = DisposeBag()
     
     init(dispatcher: Dispatcher = .shared){
-        dispatcher.register {[weak self] action in
-            guard let self = self else { return }
-            switch action{
-            case let .setFavoriteRepositories(repositories):
-                self._favoriteRepositories.accept(repositories)
-            case let .error(error):
-                self._error.accept(error)
-            default:
-                break
-            }
-        }.disposed(by: disposeBag)
+        dispatcher.searchRepositories
+            .withLatestFrom(_favoriteRepositories)
+            .bind(to: _favoriteRepositories)
+            .disposed(by: disposeBag)
     }
 }

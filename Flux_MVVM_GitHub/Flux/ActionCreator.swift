@@ -21,43 +21,37 @@ final class ActionCreator{
     }
     
     func searchRepositories(query:String,page:Int = 1){
-        dispatcher.dispatch(.searchQuery(query))
-        dispatcher.dispatch(.isRepositoriesFetching(true))
         _ = apiSession.searchRepositories(query: query, page: page)
             .take(1)
             .subscribe(onNext: { [weak self] (repositories,pagination) in
-                self?.dispatcher.dispatch(.searchRepositories(repositories))
-                self?.dispatcher.dispatch(.searchPagination(pagination))
-                self?.dispatcher.dispatch(.isRepositoriesFetching(false))
+                self?.dispatcher.searchRepositories.accept(repositories)
             }, onError: {[weak self] error in
-                self?.dispatcher.dispatch(.error(error))
-                self?.dispatcher.dispatch(.isRepositoriesFetching(false))
+                self?.dispatcher.error.accept(error)
             })
-        apiSession.searchRepositories(query: query, page: page)
     }
     
     func clearRepositories(){
-        dispatcher.dispatch(.clearRepositories)
+        dispatcher.clearRepositories.accept(())
     }
     
     func setSelectedRepository(repository:Repository){
-        dispatcher.dispatch(.selectedRepository(repository))
+        
     }
     
     func addFavoriteRepository(_ repository: Repository){
         let repositories = localCache[.favorites] + [repository]
         localCache[.favorites] = repositories
-        dispatcher.dispatch(.setFavoriteRepositories(repositories))
+        dispatcher.favoritesRepositories.accept(repositories)
     }
     
     func removeFavoriteRepository(_ repository: Repository){
         let repositories = localCache[.favorites].filter{ $0.id != repository.id }
         localCache[.favorites] = repositories
-        dispatcher.dispatch(.setFavoriteRepositories(repositories))
+        dispatcher.favoritesRepositories.accept(repositories)
     }
     
     func loadFavoriteRepositories(){
         let repositories = localCache[.favorites]
-        dispatcher.dispatch(.setFavoriteRepositories(repositories))
+        dispatcher.favoritesRepositories.accept(repositories)
     }
 }

@@ -13,13 +13,13 @@ typealias DispatchToken = String
 final class Dispatcher {
     static let shared = Dispatcher()
     
-    private let _action = PublishRelay<Action>()
+    let searchRepositories = PublishRelay<[Repository]>()
     
-    func register(callback: @escaping (Action)->())->Disposable{
-        _action.subscribe(onNext: callback)
-    }
+    let clearRepositories = PublishRelay<Void>()
     
-    func dispatch(_ action:Action){
-        _action.accept(action)
-    }
+    let error = PublishRelay<Error>()
+    
+    let selectedRepository = PublishRelay<Repository>()
+    
+    let favoritesRepositories = PublishRelay<[Repository]>()
 }

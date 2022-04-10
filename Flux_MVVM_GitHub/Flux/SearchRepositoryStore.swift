@@ -28,18 +28,12 @@ class SearchRepositoryStore {
     private let disposeBag = DisposeBag()
     
     init(dispatcher: Dispatcher = .shared) {
-        dispatcher.register { [weak self] action in
-            guard let self = self else { return }
-            switch action{
-            case let .searchRepositories(repositories):
-                self._repositories.accept(repositories)
-            case .clearRepositories:
-                self._repositories.accept([])
-            case let .error(error):
-                self._error.accept(error)
-            default:
-                break
-            }
-        }.disposed(by: disposeBag)
+        dispatcher.searchRepositories
+            .bind(to: _repositories)
+            .disposed(by: disposeBag)
+        dispatcher.clearRepositories
+            .map { [] }
+            .bind(to: _repositories)
+            .disposed(by: disposeBag)
     }
 }
