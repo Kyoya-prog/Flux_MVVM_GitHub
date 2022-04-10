@@ -11,11 +11,10 @@ import UIKit
 
 class RepositorySearchViewController: UIViewController {
     
-    init(searchStore: SearchRepositoryStore = .shared,
-         actionCreator: ActionCreator = .init()) {
-        self.searchStore = searchStore
-        self.actionCreator = actionCreator
-        dataSource = RepositorySearchDataSource(searchStore: searchStore, actionCreator: actionCreator)
+    init(flux: Flux = .shared) {
+        self.searchStore = flux.searchRepositoryStore
+        self.actionCreator = flux.searchRepositoryActionCreator
+        dataSource = RepositorySearchDataSource()
         dataSource.configure(tableView)
         super.init(nibName: nil, bundle: nil)
     }
@@ -26,7 +25,7 @@ class RepositorySearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchStore.repositoryObservable.map{_ in}
+        searchStore.repositories.asObservable().map{_ in}
             .bind(to: Binder(tableView){ tableview, _ in
                 tableview.reloadData()
             }).disposed(by: disposeBag)
@@ -44,7 +43,7 @@ class RepositorySearchViewController: UIViewController {
     }
     
     private let searchStore: SearchRepositoryStore
-    private let actionCreator: ActionCreator
+    private let actionCreator: SearchRepositoryActionCreator
     private let dataSource: RepositorySearchDataSource
     private let disposeBag = DisposeBag()
     

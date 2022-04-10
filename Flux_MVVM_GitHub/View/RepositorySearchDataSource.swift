@@ -11,12 +11,13 @@ import UIKit
 final class RepositorySearchDataSource: NSObject {
 
     private let searchStore: SearchRepositoryStore
-    private let actionCreator: ActionCreator
+    private let searchRepositoryActionCreator: SearchRepositoryActionCreator
+    private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(searchStore: SearchRepositoryStore,
-         actionCreator: ActionCreator) {
-        self.searchStore = searchStore
-        self.actionCreator = actionCreator
+    init(flux: Flux = .shared) {
+        self.searchStore = flux.searchRepositoryStore
+        self.searchRepositoryActionCreator = flux.searchRepositoryActionCreator
+        self.selectRepositoryActionCreator = flux.selectRepositoryActionCreator
 
         super.init()
     }
@@ -30,14 +31,14 @@ final class RepositorySearchDataSource: NSObject {
 
 extension RepositorySearchDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return searchStore.repositories.count
+        return searchStore.repositories.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RepositoryCell.reuseIdentifier, for: indexPath)
 
         if let repositoryCell = cell as? RepositoryCell {
-            let repository = searchStore.repositories[indexPath.row]
+            let repository = searchStore.repositories.value[indexPath.row]
             repositoryCell.configure(title: repository.fullName, description: repository.description ?? "", language: repository.language ?? "", starCount: repository.stargazersCount)
         }
 
@@ -48,7 +49,7 @@ extension RepositorySearchDataSource: UITableViewDataSource {
 extension RepositorySearchDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let repository = searchStore.repositories[indexPath.row]
-        actionCreator.setSelectedRepository(repository: repository)
+        let repository = searchStore.repositories.value[indexPath.row]
+        selectRepositoryActionCreator.setSelectedRepository(repository)
     }
 }

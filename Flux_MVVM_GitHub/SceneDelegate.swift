@@ -11,13 +11,12 @@ import RxSwift
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
-    private let actionCreator = ActionCreator()
     private let searchStore = SearchRepositoryStore.shared
-    private let selectedRepositoryStore = SelectedRepositoryStore.shared
+    private let selectRepositoryStore = SelectedRepositoryStore.shared
+    private let favoriteRepositoryActionCreator = FavoriteRepositoryActionCreator.shared
     
     private lazy var showRepositoryDetailDisposable: Disposable = {
-        return selectedRepositoryStore.repositoryObservable
+        return selectRepositoryStore.repository.asObservable()
             .flatMap { $0 == nil ? .empty() : Observable.just(()) }
             .bind(to: Binder(self) { me, _ in
                 guard
@@ -44,7 +43,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 $0.element.0.tabBarItem = UITabBarItem(tabBarSystemItem: $0.element.1, tag: $0.offset)
             }
             tabBarController.setViewControllers(values.map { $0.0 }, animated: false)
-            actionCreator.loadFavoriteRepositories()
+            favoriteRepositoryActionCreator.loadFavoriteRepositories()
             window.rootViewController = tabBarController
             self.window = window
             window.makeKeyAndVisible()

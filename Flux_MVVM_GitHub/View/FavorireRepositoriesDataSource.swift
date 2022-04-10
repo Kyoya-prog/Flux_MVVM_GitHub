@@ -10,12 +10,11 @@ import UIKit
 final class FavoriteRepositoriesDataSource: NSObject {
 
     private let favoriteRepositoryStore: FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(favoriteRepositoryStore: FavoriteRepositoryStore,
-         actionCreator: ActionCreator) {
-        self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.actionCreator = actionCreator
+    init(flux: Flux = .shared) {
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.selectRepositoryActionCreator = flux.selectRepositoryActionCreator
 
         super.init()
     }
@@ -29,14 +28,14 @@ final class FavoriteRepositoriesDataSource: NSObject {
 
 extension FavoriteRepositoriesDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return favoriteRepositoryStore.repositories.count
+        return favoriteRepositoryStore.repositories.value.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FavoriteRepositoryCell.reuseIdentifier, for: indexPath)
 
         if let repositoryCell = cell as? FavoriteRepositoryCell {
-            let repository = favoriteRepositoryStore.repositories[indexPath.row]
+            let repository = favoriteRepositoryStore.repositories.value[indexPath.row]
             repositoryCell.configure(title: repository.fullName, description: repository.description ?? "", language: repository.language ?? "", starCount: repository.stargazersCount)
         }
 
@@ -47,7 +46,7 @@ extension FavoriteRepositoriesDataSource: UITableViewDataSource {
 extension FavoriteRepositoriesDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
-        let repository = favoriteRepositoryStore.repositories[indexPath.row]
-        actionCreator.setSelectedRepository(repository: repository)
+        let repository = favoriteRepositoryStore.repositories.value[indexPath.row]
+        selectRepositoryActionCreator.setSelectedRepository(repository)
     }
 }

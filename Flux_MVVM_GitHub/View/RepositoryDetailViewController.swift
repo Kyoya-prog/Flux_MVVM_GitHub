@@ -15,15 +15,13 @@ final class RepositoryDetailViewController:UIViewController{
     private lazy var webView = WKWebView(frame: .zero, configuration: configuration)
     private let selectedRepositoryStore:SelectedRepositoryStore
     private let favoriteRepositoryStore:FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let actionCreator: FavoriteRepositoryActionCreator
     private let disposeBag = DisposeBag()
     
-    init(selectedStore:SelectedRepositoryStore = .shared,
-         favoriteStore:FavoriteRepositoryStore = .shared,
-         actionCreator:ActionCreator = .init()){
-        self.selectedRepositoryStore = selectedStore
-        self.favoriteRepositoryStore = favoriteStore
-        self.actionCreator = actionCreator
+    init(flux: Flux = .shared){
+        self.selectedRepositoryStore = flux.selectedRepositoryStore
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.actionCreator = flux.favoriteRepositoryActionCreator
         
 
         super.init(nibName: nil, bundle: nil)
@@ -34,13 +32,13 @@ final class RepositoryDetailViewController:UIViewController{
     }
     
     private func setUpObservableSubscription(){
-        let repository = selectedRepositoryStore.repositoryObservable
+        let repository = selectedRepositoryStore.repository.asObservable()
             .flatMap { repository -> Observable<Repository> in
                 repository.map(Observable.just) ?? .empty()
             }
             .share(replay: 1, scope: .whileConnected)
 
-        let isFavorite = favoriteRepositoryStore.repositoriesObservable
+        let isFavorite = favoriteRepositoryStore.repositories.asObservable()
             .withLatestFrom(repository) { ($0, $1) }
             .map { repositories, repository -> Bool in
                 repositories.contains { $0.id == repository.id }

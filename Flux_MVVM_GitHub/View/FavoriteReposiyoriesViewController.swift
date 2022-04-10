@@ -11,14 +11,14 @@ import RxSwift
 
 class FavoriteRepositoriesViewController: UIViewController {
     
-    init(favoriteRepositoryStore: FavoriteRepositoryStore = .shared,
-         actionCreator: ActionCreator = .init()) {
-        self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.actionCreator = actionCreator
-        dataSource = FavoriteRepositoriesDataSource(favoriteRepositoryStore: favoriteRepositoryStore, actionCreator: actionCreator)
+    init(flux: Flux = .shared) {
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.favoriteRepositoryActionCreator = flux.favoriteRepositoryActionCreator
+        self.selectedRepositoryActionCreator = flux.selectRepositoryActionCreator
+        dataSource = FavoriteRepositoriesDataSource()
         dataSource.configure(tableView)
         
-        favoriteRepositoryStore.repositoriesObservable.bind(to: Binder(tableView){ tableView,_ in
+        favoriteRepositoryStore.repositories.asObservable().bind(to: Binder(tableView){ tableView,_ in
             tableView.reloadData()
         }).disposed(by: disposeBag)
 
@@ -37,12 +37,13 @@ class FavoriteRepositoriesViewController: UIViewController {
     }
     
     private let favoriteRepositoryStore: FavoriteRepositoryStore
-    private let actionCreator: ActionCreator
+    private let favoriteRepositoryActionCreator: FavoriteRepositoryActionCreator
+    private let selectedRepositoryActionCreator: SelectRepositoryActionCreator
     private let dataSource: FavoriteRepositoriesDataSource
     private let disposeBag = DisposeBag()
     
     private var repositories: [Repository] {
-        return favoriteRepositoryStore.repositories
+        return favoriteRepositoryStore.repositories.value
     }
     
     private let tableView = UITableView()
