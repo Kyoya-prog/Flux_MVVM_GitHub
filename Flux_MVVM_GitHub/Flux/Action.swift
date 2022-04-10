@@ -6,8 +6,15 @@
 //
 
 enum Action{
-    case addRepositories([Repository])
+    case searchQuery(String?)
+    case searchPagination(Pagination?)
+    case searchRepositories([Repository])
     case clearRepositories
-    case selectedRepository(Repository)
+    case isRepositoriesFetching(Bool)
+    case isSearchFieldEditing(Bool)
+    case error(Error)
+
     case setFavoriteRepositories([Repository])
+
+    case selectedRepository(Repository?)
 }

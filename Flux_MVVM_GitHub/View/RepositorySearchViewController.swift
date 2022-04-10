@@ -5,6 +5,8 @@
 //  Created by 松山響也 on 2022/04/08.
 //
 
+import RxSwift
+import RxCocoa
 import UIKit
 
 class RepositorySearchViewController: UIViewController {
@@ -24,28 +26,27 @@ class RepositorySearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchStore.repositoryObservable.map{_ in}
+            .bind(to: Binder(tableView){ tableview, _ in
+                tableview.reloadData()
+            }).disposed(by: disposeBag)
+        searchBar.rx.searchButtonClicked
+            .withLatestFrom(searchBar.rx.text)
+            .subscribe(onNext: { [actionCreator] text in
+                if let text = text, !text.isEmpty {
+                    actionCreator.clearRepositories()
+                    actionCreator.searchRepositories(query: text)
+                } })
+            .disposed(by: disposeBag)
         
         title = "Search Repositories"
-        searchBar.delegate = self
-        _ = reloadSubscription
         construct()
     }
     
     private let searchStore: SearchRepositoryStore
     private let actionCreator: ActionCreator
     private let dataSource: RepositorySearchDataSource
-    
-    private lazy var reloadSubscription : Subscription = {
-        return searchStore.addListener { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
-    }()
-    
-    private var repositories: [Repository] {
-        return searchStore.repositories
-    }
+    private let disposeBag = DisposeBag()
     
     private let tableView = UITableView()
     
@@ -71,16 +72,5 @@ class RepositorySearchViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
     }
-
-
-}
-
-extension RepositorySearchViewController: UISearchBarDelegate{
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        if let text = searchBar.text, !text.isEmpty {
-            actionCreator.clearRepositories()
-            actionCreator.searchRepositories(query: text)
-        }
-}
 }
 

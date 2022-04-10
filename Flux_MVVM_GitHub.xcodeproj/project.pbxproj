@@ -32,7 +32,6 @@
 		3DAC0DA4280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA3280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift */; };
 		3DAC0DA62802834200CFDF32 /* FavoriteRepositoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA52802834200CFDF32 /* FavoriteRepositoryCell.swift */; };
 		3DAC0DA82802843900CFDF32 /* FavorireRepositoriesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DAC0DA72802843900CFDF32 /* FavorireRepositoriesDataSource.swift */; };
-		3DD28FF92800235500E71564 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FF82800235500E71564 /* Store.swift */; };
 		3DD28FFB280025CF00E71564 /* SearchRepositoryStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */; };
 		3DD28FFE28006F6700E71564 /* RepositorySearchDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFD28006F6700E71564 /* RepositorySearchDataSource.swift */; };
 		3DD2900028006F8700E71564 /* RrpoeitoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DD28FFF28006F8700E71564 /* RrpoeitoryCell.swift */; };
@@ -85,7 +84,6 @@
 		3DAC0DA3280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteReposiyoriesViewController.swift; sourceTree = "<group>"; };
 		3DAC0DA52802834200CFDF32 /* FavoriteRepositoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteRepositoryCell.swift; sourceTree = "<group>"; };
 		3DAC0DA72802843900CFDF32 /* FavorireRepositoriesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavorireRepositoriesDataSource.swift; sourceTree = "<group>"; };
-		3DD28FF82800235500E71564 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryStore.swift; sourceTree = "<group>"; };
 		3DD28FFD28006F6700E71564 /* RepositorySearchDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositorySearchDataSource.swift; sourceTree = "<group>"; };
 		3DD28FFF28006F8700E71564 /* RrpoeitoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RrpoeitoryCell.swift; sourceTree = "<group>"; };
@@ -179,7 +177,6 @@
 				3D9D477628000D5100FC4CAF /* Action.swift */,
 				3D9D477A28000DEB00FC4CAF /* Dispatcher.swift */,
 				3D9D477E2800126900FC4CAF /* ActionCreator.swift */,
-				3DD28FF82800235500E71564 /* Store.swift */,
 				3DD28FFA280025CF00E71564 /* SearchRepositoryStore.swift */,
 				3DD2900128007E2B00E71564 /* SelectedRepositoryStore.swift */,
 				3DAC0D9E2801C50B00CFDF32 /* FavoriteRepositoryStore.swift */,
@@ -402,7 +399,6 @@
 				3DAC0DA4280282C800CFDF32 /* FavoriteReposiyoriesViewController.swift in Sources */,
 				3DD2900028006F8700E71564 /* RrpoeitoryCell.swift in Sources */,
 				3D9D472D280007CE00FC4CAF /* SceneDelegate.swift in Sources */,
-				3DD28FF92800235500E71564 /* Store.swift in Sources */,
 				3DD28FFE28006F6700E71564 /* RepositorySearchDataSource.swift in Sources */,
 				3DD2900228007E2B00E71564 /* SelectedRepositoryStore.swift in Sources */,
 				3D9D476C28000C2800FC4CAF /* ItemResponse.swift in Sources */,
