@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 
 final class FavoriteRepositoryStore{
-    static let shared = FavoriteRepositoryStore(dispatcher: .shared)
+    static let shared = FavoriteRepositoryStore()
     
     var repositories:[Repository]{
         _favoriteRepositories.value

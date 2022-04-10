@@ -9,7 +9,7 @@ import RxSwift
 import Foundation
 
 class SearchRepositoryStore {
-    static let shared = SearchRepositoryStore(dispatcher: .shared)
+    static let shared = SearchRepositoryStore()
     
     var repositories: [Repository]{
         _repositories.value

@@ -12,11 +12,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private let searchStore = SearchRepositoryStore.shared
-    private let selectedRepositoryStore = SelectedRepositoryStore.shared
+    private let selectRepositoryStore = SelectedRepositoryStore.shared
     private let favoriteRepositoryActionCreator = FavoriteRepositoryActionCreator.shared
     
     private lazy var showRepositoryDetailDisposable: Disposable = {
-        return selectedRepositoryStore.repositoryObservable
+        return selectRepositoryStore.repositoryObservable
             .flatMap { $0 == nil ? .empty() : Observable.just(()) }
             .bind(to: Binder(self) { me, _ in
                 guard

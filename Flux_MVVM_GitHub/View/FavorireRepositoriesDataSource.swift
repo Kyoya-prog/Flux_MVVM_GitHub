@@ -12,10 +12,9 @@ final class FavoriteRepositoriesDataSource: NSObject {
     private let favoriteRepositoryStore: FavoriteRepositoryStore
     private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(favoriteRepositoryStore: FavoriteRepositoryStore = .shared,
-         actionCreator: SelectRepositoryActionCreator = .shared) {
-        self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.selectRepositoryActionCreator = actionCreator
+    init(flux: Flux = .shared) {
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.selectRepositoryActionCreator = flux.selectRepositoryActionCreator
 
         super.init()
     }

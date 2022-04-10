@@ -11,11 +11,9 @@ import UIKit
 
 class RepositorySearchViewController: UIViewController {
     
-    init(searchStore: SearchRepositoryStore = .shared,
-         actionCreator:
-         SearchRepositoryActionCreator = .shared) {
-        self.searchStore = searchStore
-        self.actionCreator = actionCreator
+    init(flux: Flux = .shared) {
+        self.searchStore = flux.searchRepositoryStore
+        self.actionCreator = flux.searchRepositoryActionCreator
         dataSource = RepositorySearchDataSource()
         dataSource.configure(tableView)
         super.init(nibName: nil, bundle: nil)

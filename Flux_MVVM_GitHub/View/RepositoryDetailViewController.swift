@@ -18,12 +18,10 @@ final class RepositoryDetailViewController:UIViewController{
     private let actionCreator: FavoriteRepositoryActionCreator
     private let disposeBag = DisposeBag()
     
-    init(selectedStore:SelectedRepositoryStore = .shared,
-         favoriteStore:FavoriteRepositoryStore = .shared,
-         actionCreator:FavoriteRepositoryActionCreator = .shared){
-        self.selectedRepositoryStore = selectedStore
-        self.favoriteRepositoryStore = favoriteStore
-        self.actionCreator = actionCreator
+    init(flux: Flux = .shared){
+        self.selectedRepositoryStore = flux.selectedRepositoryStore
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.actionCreator = flux.favoriteRepositoryActionCreator
         
 
         super.init(nibName: nil, bundle: nil)

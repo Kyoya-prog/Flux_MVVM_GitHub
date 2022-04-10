@@ -8,9 +8,9 @@
 final class SelectRepositoryActionCreator{
     static let shared = SelectRepositoryActionCreator()
     
-    let dispatcher:SelectedRepositoryDispatcher
+    let dispatcher:SelectRepositoryDispatcher
     
-    private init(dispatcher:SelectedRepositoryDispatcher = .shared){
+    private init(dispatcher:SelectRepositoryDispatcher = .shared){
         self.dispatcher = dispatcher
     }
     

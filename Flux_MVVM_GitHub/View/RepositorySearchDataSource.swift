@@ -14,12 +14,10 @@ final class RepositorySearchDataSource: NSObject {
     private let searchRepositoryActionCreator: SearchRepositoryActionCreator
     private let selectRepositoryActionCreator: SelectRepositoryActionCreator
 
-    init(searchStore: SearchRepositoryStore = .shared,
-         searchRepositoryActionCreator: SearchRepositoryActionCreator = .shared,
-         selectRepositoryACtionCreator: SelectRepositoryActionCreator = .shared) {
-        self.searchStore = searchStore
-        self.searchRepositoryActionCreator = searchRepositoryActionCreator
-        self.selectRepositoryActionCreator = selectRepositoryACtionCreator
+    init(flux: Flux = .shared) {
+        self.searchStore = flux.searchRepositoryStore
+        self.searchRepositoryActionCreator = flux.searchRepositoryActionCreator
+        self.selectRepositoryActionCreator = flux.selectRepositoryActionCreator
 
         super.init()
     }

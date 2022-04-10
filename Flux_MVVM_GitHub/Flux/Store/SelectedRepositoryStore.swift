@@ -10,7 +10,7 @@ import RxRelay
 
 final class SelectedRepositoryStore{
     
-    static let shared = SelectedRepositoryStore(dispatcher: .shared)
+    static let shared = SelectedRepositoryStore()
     
     var repositoryObservable:Observable<Repository?>{
         _repository.asObservable()
@@ -19,7 +19,7 @@ final class SelectedRepositoryStore{
     private let _repository = BehaviorRelay<Repository?>(value: nil)
     private let disposeBag = DisposeBag()
     
-    init(dispatcher:SelectedRepositoryDispatcher = .shared){
+    init(dispatcher:SelectRepositoryDispatcher = .shared){
         dispatcher.repository
             .bind(to: _repository)
             .disposed(by: disposeBag)

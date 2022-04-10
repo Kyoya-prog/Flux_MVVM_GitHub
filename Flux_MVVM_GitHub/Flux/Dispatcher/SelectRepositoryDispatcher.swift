@@ -8,7 +8,7 @@
 import RxRelay
 
 
-final class SelectedRepositoryDispatcher{
-    static let shared = SelectedRepositoryDispatcher()
+final class SelectRepositoryDispatcher{
+    static let shared = SelectRepositoryDispatcher()
     let repository = PublishRelay<Repository>()
 }

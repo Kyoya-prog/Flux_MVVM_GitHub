@@ -11,12 +11,10 @@ import RxSwift
 
 class FavoriteRepositoriesViewController: UIViewController {
     
-    init(favoriteRepositoryStore: FavoriteRepositoryStore = .shared,
-         favoriteRepositoryActionCreator: FavoriteRepositoryActionCreator = .shared,
-         selectedRepositoryActionCreator: SelectRepositoryActionCreator = .shared) {
-        self.favoriteRepositoryStore = favoriteRepositoryStore
-        self.favoriteRepositoryActionCreator = favoriteRepositoryActionCreator
-        self.selectedRepositoryActionCreator = selectedRepositoryActionCreator
+    init(flux: Flux = .shared) {
+        self.favoriteRepositoryStore = flux.favoriteRepositoryStore
+        self.favoriteRepositoryActionCreator = flux.favoriteRepositoryActionCreator
+        self.selectedRepositoryActionCreator = flux.selectRepositoryActionCreator
         dataSource = FavoriteRepositoriesDataSource()
         dataSource.configure(tableView)
         
