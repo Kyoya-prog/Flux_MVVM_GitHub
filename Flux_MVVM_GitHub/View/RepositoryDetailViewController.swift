@@ -7,6 +7,8 @@
 
 import UIKit
 import WebKit
+import RxSwift
+import RxCocoa
 
 final class RepositoryDetailViewController:UIViewController{
     private let configuration = WKWebViewConfiguration()
@@ -14,14 +16,7 @@ final class RepositoryDetailViewController:UIViewController{
     private let selectedRepositoryStore:SelectedRepositoryStore
     private let favoriteRepositoryStore:FavoriteRepositoryStore
     private let actionCreator: ActionCreator
-    
-    private lazy var repositoryStoreSubscription: Subscription = {
-        favoriteRepositoryStore.addListener { [weak self] in
-            DispatchQueue.main.async {
-                self?.updateFavoriteButton()
-            }
-        }
-    }()
+    private let disposeBag = DisposeBag()
     
     init(selectedStore:SelectedRepositoryStore = .shared,
          favoriteStore:FavoriteRepositoryStore = .shared,
@@ -29,6 +24,8 @@ final class RepositoryDetailViewController:UIViewController{
         self.selectedRepositoryStore = selectedStore
         self.favoriteRepositoryStore = favoriteStore
         self.actionCreator = actionCreator
+        
+
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -36,15 +33,52 @@ final class RepositoryDetailViewController:UIViewController{
         fatalError("init(coder:) has not been implemented")
     }
     
+    private func setUpObservableSubscription(){
+        let repository = selectedRepositoryStore.repositoryObservable
+            .flatMap { repository -> Observable<Repository> in
+                repository.map(Observable.just) ?? .empty()
+            }
+            .share(replay: 1, scope: .whileConnected)
+
+        let isFavorite = favoriteRepositoryStore.repositoriesObservable
+            .withLatestFrom(repository) { ($0, $1) }
+            .map { repositories, repository -> Bool in
+                repositories.contains { $0.id == repository.id }
+            }
+            .share(replay: 1, scope: .whileConnected)
+
+        isFavorite
+            .bind(to: Binder(favoriteButton) { button, isFavorite in
+                button.title = isFavorite ? "🌟 Unstar" : "⭐️ Star"
+            })
+            .disposed(by: disposeBag)
+
+        
+        favoriteButton.rx.tap.asObservable()
+            .withLatestFrom(isFavorite)
+            .withLatestFrom(repository) { ($0, $1) }
+            .subscribe(onNext: {[weak self] isFavorite, repository in
+                if isFavorite {
+                    self?.actionCreator.removeFavoriteRepository(repository)
+                } else {
+                    self?.actionCreator.addFavoriteRepository(repository)
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        repository
+            .bind(to: Binder(webView) { webView, repository in
+                webView.load(URLRequest(url: repository.htmlURL))
+            })
+            .disposed(by: disposeBag)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        guard let repository = selectedRepositoryStore.repository else { return }
         navigationItem.rightBarButtonItem = favoriteButton
-        updateFavoriteButton()
-        _ = repositoryStoreSubscription
-        
+        setUpObservableSubscription()
         webView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(webView)
         NSLayoutConstraint.activate([
@@ -55,29 +89,12 @@ final class RepositoryDetailViewController:UIViewController{
         ])
         view.addSubview(webView)
 
-        webView.load(URLRequest(url: repository.htmlURL))
+        
+
     }
     
     private lazy var favoriteButton = UIBarButtonItem(title: nil,
                                                       style: .plain,
-                                                      target: self,
-                                                      action: #selector(self.favoriteButtonTap(_:)))
-    
-    private func updateFavoriteButton(){
-        let isFavorite = favoriteRepositoryStore.repositories.contains {
-            $0.id == selectedRepositoryStore.repository?.id
-        }
-        favoriteButton.title = isFavorite ? "★ Unstar" : "☆ Star"
-    }
-    
-    @objc func favoriteButtonTap(_ sender: UIBarButtonItem){
-        guard let repository = selectedRepositoryStore.repository else { return }
-        
-        if favoriteRepositoryStore.repositories.contains{ $0.id == repository.id}{
-            actionCreator.removeFavoriteRepository(repository)
-        } else {
-            actionCreator.addFavoriteRepository(repository)
-        }
-    }
+                                                      target: self, action: nil)
     
 }

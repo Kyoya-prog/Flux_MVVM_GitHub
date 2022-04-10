@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,14 +16,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private let actionCreator = ActionCreator()
     private let searchStore = SearchRepositoryStore.shared
-    private let selectedStore = SelectedRepositoryStore.shared
+    private let selectedRepositoryStore = SelectedRepositoryStore.shared
     
-    private lazy var showRepositoryDetailSubscription: Subscription = {
-        return selectedStore.addListener { [weak self] in
-            DispatchQueue.main.async {
+    private lazy var showRepositoryDetailDisposable: Disposable = {
+        return selectedRepositoryStore.repositoryObservable
+            .flatMap { $0 == nil ? .empty() : Observable.just(()) }
+            .bind(to: Binder(self) { me, _ in
                 guard
-                    let me = self,
-                    me.selectedStore.repository != nil,
                     let tabBarController = me.window?.rootViewController as? UITabBarController,
                     let navigationController = tabBarController.selectedViewController as? UINavigationController
                 else {
@@ -29,8 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 let vc = RepositoryDetailViewController()
                 navigationController.pushViewController(vc, animated: true)
-            }
-        }
+            })
     }()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -44,10 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             $0.element.0.tabBarItem = UITabBarItem(tabBarSystemItem: $0.element.1, tag: $0.offset)
         }
         tabBarController.setViewControllers(values.map { $0.0 }, animated: false)
-        actionCreator.loadFavoriteRepositories()
         window?.rootViewController = tabBarController
         window?.makeKeyAndVisible()
-        _ = showRepositoryDetailSubscription
+        _ = showRepositoryDetailDisposable
+        actionCreator.loadFavoriteRepositories()
 
         return true
     }

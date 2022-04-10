@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -13,14 +14,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     private let actionCreator = ActionCreator()
     private let searchStore = SearchRepositoryStore.shared
-    private let selectedStore = SelectedRepositoryStore.shared
+    private let selectedRepositoryStore = SelectedRepositoryStore.shared
     
-    private lazy var showRepositoryDetailSubscription: Subscription = {
-        return selectedStore.addListener { [weak self] in
-            DispatchQueue.main.async {
+    private lazy var showRepositoryDetailDisposable: Disposable = {
+        return selectedRepositoryStore.repositoryObservable
+            .flatMap { $0 == nil ? .empty() : Observable.just(()) }
+            .bind(to: Binder(self) { me, _ in
                 guard
-                    let me = self,
-                    me.selectedStore.repository != nil,
                     let tabBarController = me.window?.rootViewController as? UITabBarController,
                     let navigationController = tabBarController.selectedViewController as? UINavigationController
                 else {
@@ -28,8 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
                 let vc = RepositoryDetailViewController()
                 navigationController.pushViewController(vc, animated: true)
-            }
-        }
+            })
     }()
 
 
@@ -50,7 +49,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             self.window = window
             window.makeKeyAndVisible()
             
-            _ = showRepositoryDetailSubscription
+            _ = showRepositoryDetailDisposable
         }
     }
 

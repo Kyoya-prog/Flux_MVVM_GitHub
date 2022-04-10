@@ -21,14 +21,19 @@ final class ActionCreator{
     }
     
     func searchRepositories(query:String,page:Int = 1){
-        apiSession.searchRepositories(query: query, page: page) {[weak self] result in
-            switch result {
-            case let .success((repositories, _)):
-                self?.dispatcher.dispatch(.addRepositories(repositories))
-            case let .failure(error):
-                print(error)
-            }
-        }
+        dispatcher.dispatch(.searchQuery(query))
+        dispatcher.dispatch(.isRepositoriesFetching(true))
+        _ = apiSession.searchRepositories(query: query, page: page)
+            .take(1)
+            .subscribe(onNext: { [weak self] (repositories,pagination) in
+                self?.dispatcher.dispatch(.searchRepositories(repositories))
+                self?.dispatcher.dispatch(.searchPagination(pagination))
+                self?.dispatcher.dispatch(.isRepositoriesFetching(false))
+            }, onError: {[weak self] error in
+                self?.dispatcher.dispatch(.error(error))
+                self?.dispatcher.dispatch(.isRepositoriesFetching(false))
+            })
+        apiSession.searchRepositories(query: query, page: page)
     }
     
     func clearRepositories(){
