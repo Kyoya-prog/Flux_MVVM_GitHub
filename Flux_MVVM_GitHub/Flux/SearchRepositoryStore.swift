@@ -32,7 +32,7 @@ class SearchRepositoryStore {
             guard let self = self else { return }
             switch action{
             case let .searchRepositories(repositories):
-                self._repositories.accept(self._repositories.value + repositories)
+                self._repositories.accept(repositories)
             case .clearRepositories:
                 self._repositories.accept([])
             case let .error(error):

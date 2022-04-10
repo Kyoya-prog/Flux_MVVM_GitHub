@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import RxCocoa
+import RxSwift
 
 class FavoriteRepositoriesViewController: UIViewController {
     
@@ -15,6 +17,12 @@ class FavoriteRepositoriesViewController: UIViewController {
         self.actionCreator = actionCreator
         dataSource = FavoriteRepositoriesDataSource(favoriteRepositoryStore: favoriteRepositoryStore, actionCreator: actionCreator)
         dataSource.configure(tableView)
+        
+        favoriteRepositoryStore.repositoriesObservable.bind(to: Binder(tableView){ tableView,_ in
+            tableView.reloadData()
+        }).disposed(by: disposeBag)
+
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -25,21 +33,13 @@ class FavoriteRepositoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "favorite"
-        _ = reloadSubscription
         construct()
     }
     
     private let favoriteRepositoryStore: FavoriteRepositoryStore
     private let actionCreator: ActionCreator
     private let dataSource: FavoriteRepositoriesDataSource
-    
-    private lazy var reloadSubscription : Subscription = {
-        return favoriteRepositoryStore.addListener { [weak self] in
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
-    }()
+    private let disposeBag = DisposeBag()
     
     private var repositories: [Repository] {
         return favoriteRepositoryStore.repositories
