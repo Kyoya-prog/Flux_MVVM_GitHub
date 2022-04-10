@@ -11,13 +11,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
+    private let actionCreator = ActionCreator()
+    private let searchStore = SearchRepositoryStore.shared
+    private let selectedStore = SelectedRepositoryStore.shared
+    
+    private lazy var showRepositoryDetailSubscription: Subscription = {
+        return selectedStore.addListener { [weak self] in
+            DispatchQueue.main.async {
+                guard
+                    let me = self,
+                    me.selectedStore.repository != nil,
+                    let tabBarController = me.window?.rootViewController as? UITabBarController,
+                    let navigationController = tabBarController.selectedViewController as? UINavigationController
+                else {
+                    return
+                }
+                let vc = RepositoryDetailViewController()
+                navigationController.pushViewController(vc, animated: true)
+            }
+        }
+    }()
+
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = ViewController.init()
+            let tabBarController = UITabBarController()
+            let values: [(UINavigationController, UITabBarItem.SystemItem)] = [
+                (UINavigationController(rootViewController: RepositorySearchViewController()), .search),
+                (UINavigationController(rootViewController: FavoriteRepositoriesViewController()), .favorites)
+            ]
+            values.enumerated().forEach {
+                $0.element.0.tabBarItem = UITabBarItem(tabBarSystemItem: $0.element.1, tag: $0.offset)
+            }
+            tabBarController.setViewControllers(values.map { $0.0 }, animated: false)
+            actionCreator.loadFavoriteRepositories()
+            window.rootViewController = tabBarController
             self.window = window
             window.makeKeyAndVisible()
+            
+            _ = showRepositoryDetailSubscription
         }
     }
 
